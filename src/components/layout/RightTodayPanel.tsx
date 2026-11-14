@@ -85,10 +85,14 @@ export const RightTodayPanel: React.FC<Props> = ({
       }`}
     >
       {/* Unified Header Row (constant vertical alignment so toggle never jumps) */}
-      <div className="flex items-center justify-between gap-2 min-h-[32px]">
+      <div
+        className={`flex items-center min-h-[32px] ${
+          collapsed ? 'justify-between xl:justify-center gap-0' : 'justify-between gap-2'
+        }`}
+      >
         <div
           className={`flex items-center gap-1.5 overflow-hidden whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            collapsed ? 'max-w-0 opacity-0' : 'max-w-[180px] opacity-100'
+            collapsed ? 'w-0 max-w-0 opacity-0 xl:hidden' : 'max-w-[180px] opacity-100'
           }`}
         >
           <h2 className="text-xl font-extrabold tracking-tight text-[#08090D]">Hôm nay</h2>
@@ -104,13 +108,13 @@ export const RightTodayPanel: React.FC<Props> = ({
         </div>
 
         <div
-          className={`flex items-center gap-1.5 ${
-            collapsed ? 'w-full justify-between xl:justify-center' : 'ml-auto'
+          className={`flex items-center ${
+            collapsed ? 'w-full justify-between xl:justify-center gap-0' : 'gap-1.5 ml-auto'
           }`}
         >
           <span
             className={`rounded-full bg-white text-xs font-semibold text-black/65 overflow-hidden whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              collapsed ? 'max-w-0 px-0 py-0 opacity-0' : 'max-w-[110px] px-2.5 py-1 opacity-100'
+              collapsed ? 'hidden' : 'px-2.5 py-1 opacity-100'
             }`}
           >
             {formatShortViDate(todayISO)}
