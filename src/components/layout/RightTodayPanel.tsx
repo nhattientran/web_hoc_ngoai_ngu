@@ -80,22 +80,22 @@ export const RightTodayPanel: React.FC<Props> = ({
 
   return (
     <aside
-      className={`xl:sticky xl:top-5 shrink-0 w-full rounded-[26px] border border-black/10 bg-[#EEEEEC] transition-[width,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-        collapsed ? 'p-2.5 xl:w-[60px] xl:py-3.5' : 'p-4 sm:p-5 xl:w-[330px]'
+      className={`xl:sticky xl:top-5 shrink-0 w-full rounded-[26px] border border-black/10 bg-[#EEEEEC] p-3.5 transition-[width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        collapsed ? 'xl:w-[64px]' : 'xl:w-[330px]'
       }`}
     >
-      {/* Unified Header Row (constant vertical alignment so toggle never jumps) */}
+      {/* Unified Header Row (constant padding + height so toggle never shifts) */}
       <div
         className={`flex items-center min-h-[32px] ${
           collapsed ? 'justify-between xl:justify-center gap-0' : 'justify-between gap-2'
         }`}
       >
         <div
-          className={`flex items-center gap-1.5 overflow-hidden whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          className={`flex items-center gap-1.5 overflow-hidden whitespace-nowrap transition-opacity duration-200 ${
             collapsed ? 'w-0 max-w-0 opacity-0 xl:hidden' : 'max-w-[180px] opacity-100'
           }`}
         >
-          <h2 className="text-xl font-extrabold tracking-tight text-[#08090D]">Hôm nay</h2>
+          <h2 className="pl-1 text-xl font-extrabold tracking-tight text-[#08090D]">Hôm nay</h2>
           <HoverTooltip
             label="Lịch học hằng ngày"
             description="Theo dõi nhiệm vụ, thẻ đến hạn và mục tiêu XP trong ngày"
@@ -113,8 +113,8 @@ export const RightTodayPanel: React.FC<Props> = ({
           }`}
         >
           <span
-            className={`rounded-full bg-white text-xs font-semibold text-black/65 overflow-hidden whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-              collapsed ? 'hidden' : 'px-2.5 py-1 opacity-100'
+            className={`rounded-full bg-white text-xs font-semibold text-black/65 overflow-hidden whitespace-nowrap ${
+              collapsed ? 'hidden' : 'px-2.5 py-1'
             }`}
           >
             {formatShortViDate(todayISO)}
@@ -186,15 +186,18 @@ export const RightTodayPanel: React.FC<Props> = ({
         </div>
       )}
 
-      {/* Expanded Cards Container: locked inner width keeps cards from squishing during slide */}
+      {/* Expanded Cards Drawer: exact 0fr <-> 1fr height + overflow-hidden clip keeps cards locked at 302px with zero burst */}
       <div
-        className={`transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          collapsed
-            ? 'max-h-0 overflow-hidden opacity-0 mt-0 pointer-events-none'
-            : 'max-h-[1600px] overflow-visible opacity-100 mt-4'
+        className={`grid transition-[grid-template-rows,margin] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          collapsed ? 'grid-rows-[0fr] mt-0 pointer-events-none' : 'grid-rows-[1fr] mt-4'
         }`}
       >
-        <div className="xl:w-[290px] space-y-4">
+        <div className="min-h-0 overflow-hidden">
+          <div
+            className={`xl:w-[300px] space-y-4 transition-opacity ${
+              collapsed ? 'opacity-0 duration-100' : 'opacity-100 duration-200 delay-75'
+            }`}
+          >
 
       {/* Daily Goal Summary */}
       <div className="rounded-[20px] bg-white p-4 border border-black/5 space-y-2.5">
@@ -368,7 +371,8 @@ export const RightTodayPanel: React.FC<Props> = ({
             Hoàn thành bài học đầu tiên để mở khóa huy hiệu!
           </p>
         )}
-        </div>
+            </div>
+          </div>
         </div>
       </div>
     </aside>
