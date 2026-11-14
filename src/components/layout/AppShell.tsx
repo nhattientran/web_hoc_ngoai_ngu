@@ -5,6 +5,8 @@ import {
   Bell,
   BookOpen,
   ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
   Flame,
   GitBranch,
   GraduationCap,
@@ -573,16 +575,16 @@ export const AppShell: React.FC<Props> = ({
             </button>
           </div>
 
-          <div className="flex gap-4 lg:gap-5">
+          <div className="flex items-start gap-4 lg:gap-5">
             {/* Compact Expandable Left Icon Sidebar */}
             <aside
-              className={`relative z-40 hidden md:flex flex-col justify-between shrink-0 transition-all duration-200 ${
-                sidebarExpanded ? 'w-56' : 'w-12'
+              className={`relative z-40 hidden md:flex flex-col justify-between shrink-0 transition-[width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                sidebarExpanded ? 'w-56' : 'w-[50px]'
               }`}
             >
               <div className="sticky top-5 z-40 space-y-2">
                 <HoverTooltip
-                  label={sidebarExpanded ? 'Thu gọn thanh bên' : 'Mở rộng menu'}
+                  label={sidebarExpanded ? 'Thu gọn thanh bên (<<)' : 'Mở rộng menu (>>)'}
                   description="Hiện hoặc ẩn tên chữ đầy đủ của tất cả các mục bên trái"
                   placement="right"
                   disabled={sidebarExpanded}
@@ -591,17 +593,21 @@ export const AppShell: React.FC<Props> = ({
                   <button
                     type="button"
                     onClick={() => setSidebarExpanded((v) => !v)}
-                    className="flex h-10 w-full items-center justify-center rounded-full border border-black/10 bg-white text-[#08090D] shadow-sm hover:bg-[#EEEEEB]"
+                    className="flex h-10 w-full items-center justify-start rounded-full border border-black/10 bg-white px-[16px] text-[#08090D] shadow-sm transition-colors hover:bg-[#EEEEEB]"
                     aria-label={sidebarExpanded ? 'Thu gọn thanh bên' : 'Mở rộng menu'}
                   >
                     {sidebarExpanded ? (
-                      <span className="flex w-full items-center justify-between px-3 text-xs font-bold">
-                        <span>{isEn ? 'Menu Tiếng Anh' : 'Menu Tiếng Nhật'}</span>
-                        <X className="h-3.5 w-3.5" />
-                      </span>
+                      <ChevronsLeft className="h-4 w-4 shrink-0" />
                     ) : (
-                      <Menu className="h-4 w-4" />
+                      <ChevronsRight className="h-4 w-4 shrink-0" />
                     )}
+                    <span
+                      className={`overflow-hidden whitespace-nowrap text-left text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                        sidebarExpanded ? 'ml-2.5 max-w-[155px] opacity-100' : 'ml-0 max-w-0 opacity-0'
+                      }`}
+                    >
+                      {isEn ? 'Thu gọn menu' : 'Thu gọn menu'}
+                    </span>
                   </button>
                 </HoverTooltip>
 
@@ -622,14 +628,22 @@ export const AppShell: React.FC<Props> = ({
                           type="button"
                           onClick={() => onNavigate(item.id)}
                           aria-label={item.label}
-                          className={`flex w-full items-center gap-2.5 rounded-full px-2.5 py-2.5 text-xs font-bold transition ${
+                          className={`flex h-9 w-full items-center justify-start rounded-full px-[10px] text-xs font-bold transition-colors ${
                             active
                               ? 'bg-[#08090D] text-white'
                               : 'text-black/65 hover:bg-[#F6F6F4] hover:text-[#08090D]'
-                          } ${sidebarExpanded ? 'justify-start' : 'justify-center'}`}
+                          }`}
                         >
                           <Icon className="h-4 w-4 shrink-0" />
-                          {sidebarExpanded && <span className="truncate">{item.label}</span>}
+                          <span
+                            className={`overflow-hidden whitespace-nowrap truncate transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                              sidebarExpanded
+                                ? 'ml-2.5 max-w-[160px] opacity-100'
+                                : 'ml-0 max-w-0 opacity-0'
+                            }`}
+                          >
+                            {item.label}
+                          </span>
                         </button>
                       </HoverTooltip>
                     );
@@ -648,15 +662,21 @@ export const AppShell: React.FC<Props> = ({
                       type="button"
                       onClick={() => setNotifOpen((v) => !v)}
                       aria-expanded={notifOpen}
-                      className={`flex h-10 w-full items-center rounded-full border shadow-sm transition ${
+                      className={`flex h-10 w-full items-center justify-start rounded-full border px-[16px] shadow-sm transition-colors ${
                         notifOpen
                           ? 'border-[#08090D] bg-[#08090D] text-white'
                           : 'border-black/10 bg-white text-black/70 hover:bg-[#EEEEEB]'
-                      } ${sidebarExpanded ? 'justify-start gap-2.5 px-3.5' : 'justify-center'}`}
+                      }`}
                       aria-label="Thông báo"
                     >
                       <Bell className="h-4 w-4 shrink-0" />
-                      {sidebarExpanded && <span className="text-xs font-bold">Thông báo</span>}
+                      <span
+                        className={`overflow-hidden whitespace-nowrap text-xs font-bold transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                          sidebarExpanded ? 'ml-2.5 max-w-[140px] opacity-100' : 'ml-0 max-w-0 opacity-0'
+                        }`}
+                      >
+                        Thông báo
+                      </span>
                     </button>
                   </HoverTooltip>
 

@@ -78,26 +78,78 @@ export const RightTodayPanel: React.FC<Props> = ({
 
   const unlockedBadgeObjs = BADGE_DEFINITIONS.filter((b) => state.unlockedBadges.includes(b.id));
 
-  if (collapsed && onToggleCollapse) {
-    return (
-      <aside className="flex xl:flex-col items-center justify-between xl:justify-start gap-3 rounded-[26px] border border-black/10 bg-[#EEEEEC] p-2.5 xl:py-3.5 h-fit xl:sticky xl:top-4">
-        <HoverTooltip
-          label="Mở bảng Hôm nay (<<)"
-          description="Mở lại mục tiêu ngày, từ đến hạn SRS và chuỗi ngày học"
-          placement="left"
+  return (
+    <aside
+      className={`xl:sticky xl:top-5 shrink-0 w-full rounded-[26px] border border-black/10 bg-[#EEEEEC] transition-[width,padding] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        collapsed ? 'p-2.5 xl:w-[60px] xl:py-3.5' : 'p-4 sm:p-5 xl:w-[330px]'
+      }`}
+    >
+      {/* Unified Header Row (constant vertical alignment so toggle never jumps) */}
+      <div className="flex items-center justify-between gap-2 min-h-[32px]">
+        <div
+          className={`flex items-center gap-1.5 overflow-hidden whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            collapsed ? 'max-w-0 opacity-0' : 'max-w-[180px] opacity-100'
+          }`}
         >
-          <button
-            type="button"
-            onClick={onToggleCollapse}
-            aria-label="Mở bảng Hôm nay"
-            className="flex items-center gap-1.5 rounded-full bg-white px-2.5 py-2 text-xs font-extrabold text-[#08090D] border border-black/10 shadow-sm hover:bg-[#08090D] hover:text-white transition"
+          <h2 className="text-xl font-extrabold tracking-tight text-[#08090D]">Hôm nay</h2>
+          <HoverTooltip
+            label="Lịch học hằng ngày"
+            description="Theo dõi nhiệm vụ, thẻ đến hạn và mục tiêu XP trong ngày"
+            placement="left"
           >
-            <ChevronsLeft className="h-4 w-4 shrink-0" />
-            <span className="xl:hidden">Mở bảng Hôm nay</span>
-          </button>
-        </HoverTooltip>
+            <span className="inline-flex rounded-full p-1 hover:bg-white/70 cursor-help">
+              <Calendar className="h-4 w-4 text-black/55" />
+            </span>
+          </HoverTooltip>
+        </div>
 
-        <div className="flex xl:flex-col items-center gap-2">
+        <div
+          className={`flex items-center gap-1.5 ${
+            collapsed ? 'w-full justify-between xl:justify-center' : 'ml-auto'
+          }`}
+        >
+          <span
+            className={`rounded-full bg-white text-xs font-semibold text-black/65 overflow-hidden whitespace-nowrap transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              collapsed ? 'max-w-0 px-0 py-0 opacity-0' : 'max-w-[110px] px-2.5 py-1 opacity-100'
+            }`}
+          >
+            {formatShortViDate(todayISO)}
+          </span>
+          {onToggleCollapse && (
+            <HoverTooltip
+              label={collapsed ? 'Mở bảng Hôm nay (<<)' : 'Thu gọn bảng Hôm nay (>>)'}
+              description={
+                collapsed
+                  ? 'Mở lại mục tiêu ngày, từ đến hạn SRS và chuỗi ngày học'
+                  : 'Đóng sang phải để mở rộng không gian học'
+              }
+              placement="left"
+            >
+              <button
+                type="button"
+                onClick={onToggleCollapse}
+                aria-label={collapsed ? 'Mở bảng Hôm nay' : 'Thu gọn bảng Hôm nay'}
+                className={`flex h-8 items-center justify-center rounded-full bg-white text-black/75 border border-black/10 shadow-sm hover:bg-[#08090D] hover:text-white transition-colors ${
+                  collapsed ? 'px-2.5 xl:w-8 xl:px-0 gap-1.5' : 'w-8'
+                }`}
+              >
+                {collapsed ? (
+                  <>
+                    <ChevronsLeft className="h-3.5 w-3.5 shrink-0" />
+                    <span className="xl:hidden text-xs font-extrabold">Mở Hôm nay</span>
+                  </>
+                ) : (
+                  <ChevronsRight className="h-3.5 w-3.5 shrink-0" />
+                )}
+              </button>
+            </HoverTooltip>
+          )}
+        </div>
+      </div>
+
+      {/* Collapsed Quick Badges */}
+      {collapsed && (
+        <div className="mt-3 flex xl:flex-col items-center justify-end xl:justify-start gap-2">
           <HoverTooltip
             label={`${dueVocabCount} từ đến hạn ôn SRS`}
             description="Nhấn để mở Flashcards SRS"
@@ -128,47 +180,17 @@ export const RightTodayPanel: React.FC<Props> = ({
             </button>
           </HoverTooltip>
         </div>
-      </aside>
-    );
-  }
+      )}
 
-  return (
-    <aside className="space-y-4 rounded-[26px] border border-black/10 bg-[#EEEEEC] p-4 sm:p-5">
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-1.5">
-          <h2 className="text-xl font-extrabold tracking-tight text-[#08090D]">Hôm nay</h2>
-          <HoverTooltip
-            label="Lịch học hằng ngày"
-            description="Theo dõi nhiệm vụ, thẻ đến hạn và mục tiêu XP trong ngày"
-            placement="left"
-          >
-            <span className="inline-flex rounded-full p-1 hover:bg-white/70 cursor-help">
-              <Calendar className="h-4 w-4 text-black/55" />
-            </span>
-          </HoverTooltip>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-black/65">
-            {formatShortViDate(todayISO)}
-          </span>
-          {onToggleCollapse && (
-            <HoverTooltip
-              label="Thu gọn bảng Hôm nay (>>)"
-              description="Đóng sang phải để mở rộng không gian học"
-              placement="left"
-            >
-              <button
-                type="button"
-                onClick={onToggleCollapse}
-                aria-label="Thu gọn bảng Hôm nay"
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-black/70 border border-black/10 shadow-sm hover:bg-[#08090D] hover:text-white transition"
-              >
-                <ChevronsRight className="h-3.5 w-3.5" />
-              </button>
-            </HoverTooltip>
-          )}
-        </div>
-      </div>
+      {/* Expanded Cards Container: locked inner width keeps cards from squishing during slide */}
+      <div
+        className={`transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          collapsed
+            ? 'max-h-0 overflow-hidden opacity-0 mt-0 pointer-events-none'
+            : 'max-h-[1600px] overflow-visible opacity-100 mt-4'
+        }`}
+      >
+        <div className="xl:w-[290px] space-y-4">
 
       {/* Daily Goal Summary */}
       <div className="rounded-[20px] bg-white p-4 border border-black/5 space-y-2.5">
@@ -342,6 +364,8 @@ export const RightTodayPanel: React.FC<Props> = ({
             Hoàn thành bài học đầu tiên để mở khóa huy hiệu!
           </p>
         )}
+        </div>
+        </div>
       </div>
     </aside>
   );

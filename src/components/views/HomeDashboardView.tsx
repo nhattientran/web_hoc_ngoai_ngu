@@ -93,13 +93,9 @@ export const HomeDashboardView: React.FC<Props> = ({
   };
 
   return (
-    <div
-      className={`grid gap-5 transition-all duration-200 ${
-        rightCollapsed ? 'xl:grid-cols-[1fr_64px]' : 'xl:grid-cols-[1fr_330px]'
-      }`}
-    >
+    <div className="flex flex-col xl:flex-row xl:items-start gap-5">
       {/* Left / Main Dashboard Column */}
-      <div className="space-y-5 min-w-0">
+      <div className="flex-1 space-y-5 min-w-0">
         {/* Coach Greeting Pill (Manae Screenshot 1 style) */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="inline-flex items-center gap-2.5 rounded-full border border-black/10 bg-white py-1.5 pl-2 pr-4 shadow-sm">
