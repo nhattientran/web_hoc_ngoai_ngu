@@ -189,11 +189,11 @@ export const EnglishHubView: React.FC<Props> = ({ onStartLesson }) => {
   };
 
   return (
-    <div className="space-y-5">
-      <div className="rounded-[26px] border border-black/10 bg-white p-5 sm:p-7 shadow-soft space-y-6">
+    <div className="space-y-5 min-w-0">
+      <div className="rounded-[24px] sm:rounded-[26px] border border-black/10 bg-white p-4 sm:p-7 shadow-soft space-y-5 sm:space-y-6">
         {/* Sub-navigation */}
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex flex-wrap gap-1.5 rounded-full bg-[#F6F6F4] p-1.5 border border-black/5">
+          <div className="grid grid-cols-2 sm:inline-flex sm:flex-wrap gap-1.5 rounded-[20px] sm:rounded-full bg-[#F6F6F4] p-1.5 border border-black/5 w-full sm:w-auto">
             {[
               { id: 'overview', label: 'Tổng quan 8 Module', icon: GraduationCap },
               { id: 'ipa', label: 'Phiên âm IPA (44 âm)', icon: AudioLines },
@@ -208,12 +208,12 @@ export const EnglishHubView: React.FC<Props> = ({ onStartLesson }) => {
                   key={tab.id}
                   type="button"
                   onClick={() => setSubTab(tab.id as EnSubTab)}
-                  className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs sm:text-sm font-bold transition ${
-                    subTab === tab.id ? 'bg-[#08090D] text-white' : 'text-black/65 hover:text-[#08090D]'
+                  className={`inline-flex min-w-0 items-center justify-center sm:justify-start gap-1.5 rounded-xl sm:rounded-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-bold transition ${
+                    subTab === tab.id ? 'bg-[#08090D] text-white shadow-sm' : 'text-black/65 hover:text-[#08090D]'
                   }`}
                 >
-                  <Icon className="h-3.5 w-3.5" />
-                  {tab.label}
+                  <Icon className="h-3.5 w-3.5 shrink-0" />
+                  <span className="min-w-0 truncate">{tab.label}</span>
                 </button>
               );
             })}
@@ -242,9 +242,9 @@ export const EnglishHubView: React.FC<Props> = ({ onStartLesson }) => {
                 return (
                   <div
                     key={mod.id}
-                    className={`rounded-[22px] border p-5 space-y-3 ${style.bg} ${style.border}`}
+                    className={`min-w-0 rounded-[22px] border p-4 sm:p-5 space-y-3 ${style.bg} ${style.border}`}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-2">
                       <span className={`rounded-full px-3 py-0.5 text-xs font-extrabold ${style.pill}`}>
                         {mod.cefrOrJlpt}
                       </span>
@@ -252,7 +252,7 @@ export const EnglishHubView: React.FC<Props> = ({ onStartLesson }) => {
                     </div>
                     <h3 className="text-base font-extrabold text-[#08090D]">{mod.title}</h3>
                     <p className="text-xs text-black/70 leading-relaxed">{mod.objectiveVi}</p>
-                    <div className="space-y-2 pt-1">
+                    <div className="space-y-2 pt-1 min-w-0">
                       {modLessons.map((les) => {
                         const status = getLessonStatus(les);
                         return (
@@ -261,13 +261,13 @@ export const EnglishHubView: React.FC<Props> = ({ onStartLesson }) => {
                             type="button"
                             disabled={status === 'locked'}
                             onClick={() => onStartLesson(les)}
-                            className={`flex w-full items-center justify-between rounded-2xl bg-white/85 px-3.5 py-2.5 text-left text-xs font-bold transition ${
+                            className={`flex w-full min-w-0 items-center justify-between gap-2 rounded-2xl bg-white/85 px-3.5 py-2.5 text-left text-xs font-bold transition ${
                               status === 'locked'
                                 ? 'opacity-60 cursor-not-allowed'
                                 : 'hover:bg-white shadow-sm'
                             }`}
                           >
-                            <span className="truncate pr-2">{les.title}</span>
+                            <span className="min-w-0 flex-1 truncate pr-2">{les.title}</span>
                             <span className="shrink-0 inline-flex items-center gap-1 text-[11px]">
                               {status === 'completed' ? (
                                 <span className="text-[#1B5C32]">✓ Xong</span>

@@ -329,48 +329,52 @@ export const AppShell: React.FC<Props> = ({
   ];
 
   return (
-    <div className="min-h-screen bg-[#08090D] p-0 sm:p-2.5 lg:p-3.5">
-      <div className="mx-auto max-w-[1440px]">
+    <div className="min-h-screen bg-[#08090D] p-0 sm:p-2.5 lg:p-3.5 overflow-x-clip">
+      <div className="mx-auto max-w-[1440px] w-full">
         {/* Top Black Navigation Bar */}
-        <header className="relative z-40 flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-white sm:px-6">
+        <header className="relative z-40 flex flex-col lg:flex-row lg:flex-wrap lg:items-center lg:justify-between gap-2.5 px-3.5 py-3 text-white sm:px-6">
           {/* Left: Mascot + Brand + DEDICATED LANGUAGE WORKSPACE SWITCHER */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between lg:justify-start gap-2.5 w-full lg:w-auto min-w-0">
             <button
               type="button"
               onClick={() => onNavigate('home')}
-              className="flex items-center gap-2 text-left group"
+              className="flex items-center gap-2 text-left group shrink-0"
             >
-              <MascotAvatar size={34} className="transition group-hover:scale-105" />
-              <span className="text-lg font-extrabold tracking-tight text-white">MeowLanguage</span>
+              <MascotAvatar size={32} className="transition group-hover:scale-105" />
+              <span className="text-base sm:text-lg font-extrabold tracking-tight text-white whitespace-nowrap">
+                MeowLanguage
+              </span>
             </button>
 
             {/* Isolated Workspace Language Switcher */}
             <div
-              className="inline-flex items-center rounded-full bg-white/10 p-1 border border-white/10"
+              className="inline-flex items-center rounded-full bg-white/10 p-1 border border-white/10 shrink-0"
               role="group"
               aria-label="Chọn không gian ngôn ngữ"
             >
               <button
                 type="button"
                 onClick={() => onSwitchLanguage('en')}
-                className={`rounded-full px-3 py-1 text-xs font-extrabold transition ${
+                className={`whitespace-nowrap rounded-full px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-extrabold transition ${
                   isEn
                     ? 'bg-[#D7ECF9] text-[#1A4F73] shadow-sm'
                     : 'text-white/65 hover:text-white'
                 }`}
               >
-                🇬🇧 Tiếng Anh
+                <span className="sm:hidden">🇬🇧 Anh</span>
+                <span className="hidden sm:inline">🇬🇧 Tiếng Anh</span>
               </button>
               <button
                 type="button"
                 onClick={() => onSwitchLanguage('jp')}
-                className={`rounded-full px-3 py-1 text-xs font-extrabold transition ${
+                className={`whitespace-nowrap rounded-full px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-extrabold transition ${
                   !isEn
                     ? 'bg-[#E5D9F7] text-[#4B2C7A] shadow-sm'
                     : 'text-white/65 hover:text-white'
                 }`}
               >
-                🇯🇵 Tiếng Nhật
+                <span className="sm:hidden">🇯🇵 Nhật</span>
+                <span className="hidden sm:inline">🇯🇵 Tiếng Nhật</span>
               </button>
             </div>
           </div>
@@ -406,108 +410,121 @@ export const AppShell: React.FC<Props> = ({
           </nav>
 
           {/* Right: Search + Streak + XP Ring + User + Mobile Menu */}
-          <div className="flex items-center gap-2.5">
-            <HoverTooltip
-              label="Tìm kiếm nhanh (⌘K)"
-              description={isEn ? 'Tìm bài học, bài đọc dài & từ vựng Tiếng Anh' : 'Tìm bài học, Kana, Kanji & từ vựng Tiếng Nhật'}
-              placement="bottom"
-            >
+          <div className="flex items-center justify-between lg:justify-end gap-2 w-full lg:w-auto">
+            <div className="flex items-center gap-2">
+              <HoverTooltip
+                label="Tìm kiếm nhanh (⌘K)"
+                description={isEn ? 'Tìm bài học, bài đọc dài & từ vựng Tiếng Anh' : 'Tìm bài học, Kana, Kanji & từ vựng Tiếng Nhật'}
+                placement="bottom"
+              >
+                <button
+                  type="button"
+                  onClick={() => setSearchOpen(true)}
+                  className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white/80 hover:bg-white/15"
+                >
+                  <Search className="h-3.5 w-3.5" />
+                  <span className="hidden xl:inline">{isEn ? 'Tìm bài Anh' : 'Tìm bài Nhật'}</span>
+                  <kbd className="rounded bg-white/15 px-1.5 py-0.5 text-[10px]">⌘K</kbd>
+                </button>
+              </HoverTooltip>
+
+              <HoverTooltip
+                label={`Chuỗi học ${state.streakDays} ngày`}
+                description="Số ngày học liên tục • Bấm để xem Thống kê"
+                placement="bottom"
+              >
+                <button
+                  type="button"
+                  onClick={() => onNavigate('analytics')}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-white/8 px-3 py-1.5 text-xs font-bold text-white hover:bg-white/14"
+                >
+                  <Flame className={`h-4 w-4 ${state.streakDays > 0 ? 'text-amber-400' : 'text-white/50'}`} />
+                  <span>{state.streakDays}</span>
+                </button>
+              </HoverTooltip>
+
+              <HoverTooltip
+                label={`Tiến độ XP hôm nay (${todayXP}/${xpGoal} XP)`}
+                description={`Đang ở Cấp ${userLevel} • Bấm để xem chi tiết phân tích`}
+                placement="bottom"
+              >
+                <button
+                  type="button"
+                  onClick={() => onNavigate('analytics')}
+                  className="flex items-center gap-2 rounded-full bg-white/8 pr-3 pl-1.5 py-1 hover:bg-white/14 transition"
+                >
+                  <svg width="30" height="30" className="-rotate-90 shrink-0">
+                    <circle
+                      cx="15"
+                      cy="15"
+                      r={ringRadius}
+                      stroke="rgba(255,255,255,0.16)"
+                      strokeWidth="3"
+                      fill="none"
+                    />
+                    <circle
+                      cx="15"
+                      cy="15"
+                      r={ringRadius}
+                      stroke={isEn ? '#D7ECF9' : '#E5D9F7'}
+                      strokeWidth="3"
+                      fill="none"
+                      strokeDasharray={ringCircumference}
+                      strokeDashoffset={ringOffset}
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <div className="text-left leading-tight whitespace-nowrap">
+                    <div className="text-xs font-extrabold text-white">Cấp {userLevel}</div>
+                    <div className="text-[10px] text-white/60">
+                      {todayXP}/{xpGoal} XP
+                    </div>
+                  </div>
+                </button>
+              </HoverTooltip>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {authUser && onLogout && (
+                <HoverTooltip
+                  label={`Tài khoản: ${authUser.name}`}
+                  description={authUser.isGuest ? 'Đang học chế độ Khách • Bấm Đăng xuất để đăng nhập' : `${authUser.email} • Bấm để đăng xuất`}
+                  placement="bottom"
+                >
+                  <div className="hidden sm:flex items-center gap-1.5 rounded-full bg-white/8 pl-2.5 pr-1 py-1 border border-white/10">
+                    <span className="max-w-[100px] truncate text-xs font-bold text-white/90">
+                      {authUser.name}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={onLogout}
+                      className="inline-flex items-center gap-1 rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-bold text-white/85 hover:bg-[#F7DCE1] hover:text-[#7D233B] transition"
+                    >
+                      <LogOut className="h-3 w-3" />
+                      <span className="hidden xl:inline">Đăng xuất</span>
+                    </button>
+                  </div>
+                </HoverTooltip>
+              )}
+
               <button
                 type="button"
                 onClick={() => setSearchOpen(true)}
-                className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white/80 hover:bg-white/15"
+                className="inline-flex sm:hidden rounded-full bg-white/10 p-2 text-white"
+                aria-label="Tìm kiếm"
               >
-                <Search className="h-3.5 w-3.5" />
-                <span className="hidden xl:inline">{isEn ? 'Tìm bài Anh' : 'Tìm bài Nhật'}</span>
-                <kbd className="rounded bg-white/15 px-1.5 py-0.5 text-[10px]">⌘K</kbd>
+                <Search className="h-4 w-4" />
               </button>
-            </HoverTooltip>
 
-            <HoverTooltip
-              label={`Chuỗi học ${state.streakDays} ngày`}
-              description="Số ngày học liên tục • Bấm để xem Thống kê"
-              placement="bottom"
-            >
               <button
                 type="button"
-                onClick={() => onNavigate('analytics')}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/8 px-3 py-1.5 text-xs font-bold text-white hover:bg-white/14"
+                onClick={() => setMobileMenuOpen((v) => !v)}
+                className="inline-flex lg:hidden rounded-full bg-white/10 p-2 text-white"
+                aria-label="Menu"
               >
-                <Flame className={`h-4 w-4 ${state.streakDays > 0 ? 'text-amber-400' : 'text-white/50'}`} />
-                <span>{state.streakDays}</span>
+                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
-            </HoverTooltip>
-
-            <HoverTooltip
-              label={`Tiến độ XP hôm nay (${todayXP}/${xpGoal} XP)`}
-              description={`Đang ở Cấp ${userLevel} • Bấm để xem chi tiết phân tích`}
-              placement="bottom"
-            >
-              <button
-                type="button"
-                onClick={() => onNavigate('analytics')}
-                className="flex items-center gap-2 rounded-full bg-white/8 pr-3 pl-1.5 py-1 hover:bg-white/14 transition"
-              >
-                <svg width="30" height="30" className="-rotate-90">
-                  <circle
-                    cx="15"
-                    cy="15"
-                    r={ringRadius}
-                    stroke="rgba(255,255,255,0.16)"
-                    strokeWidth="3"
-                    fill="none"
-                  />
-                  <circle
-                    cx="15"
-                    cy="15"
-                    r={ringRadius}
-                    stroke={isEn ? '#D7ECF9' : '#E5D9F7'}
-                    strokeWidth="3"
-                    fill="none"
-                    strokeDasharray={ringCircumference}
-                    strokeDashoffset={ringOffset}
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <div className="text-left leading-tight">
-                  <div className="text-xs font-extrabold text-white">Cấp {userLevel}</div>
-                  <div className="text-[10px] text-white/60">
-                    {todayXP}/{xpGoal} XP
-                  </div>
-                </div>
-              </button>
-            </HoverTooltip>
-
-            {authUser && onLogout && (
-              <HoverTooltip
-                label={`Tài khoản: ${authUser.name}`}
-                description={authUser.isGuest ? 'Đang học chế độ Khách • Bấm Đăng xuất để đăng nhập' : `${authUser.email} • Bấm để đăng xuất`}
-                placement="bottom"
-              >
-                <div className="hidden sm:flex items-center gap-1.5 rounded-full bg-white/8 pl-2.5 pr-1 py-1 border border-white/10">
-                  <span className="max-w-[100px] truncate text-xs font-bold text-white/90">
-                    {authUser.name}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={onLogout}
-                    className="inline-flex items-center gap-1 rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-bold text-white/85 hover:bg-[#F7DCE1] hover:text-[#7D233B] transition"
-                  >
-                    <LogOut className="h-3 w-3" />
-                    <span className="hidden xl:inline">Đăng xuất</span>
-                  </button>
-                </div>
-              </HoverTooltip>
-            )}
-
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen((v) => !v)}
-              className="inline-flex lg:hidden rounded-full bg-white/10 p-2 text-white"
-              aria-label="Menu"
-            >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+            </div>
           </div>
         </header>
 
@@ -550,7 +567,7 @@ export const AppShell: React.FC<Props> = ({
         )}
 
         {/* Warm Off-White Main Workspace Shell */}
-        <div className="relative min-h-[calc(100vh-84px)] rounded-t-[24px] sm:rounded-[30px] bg-[#F6F6F4] px-3 py-4 sm:px-6 sm:py-6 pb-24">
+        <div className="relative w-full min-w-0 min-h-[calc(100vh-84px)] rounded-t-[24px] sm:rounded-[30px] bg-[#F6F6F4] px-3 py-4 sm:px-6 sm:py-6 pb-24">
           {/* Subtle Active Workspace Indicator Strip */}
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-black/5 bg-white/75 px-4 py-2 text-xs">
             <div className="flex items-center gap-2">
@@ -707,12 +724,12 @@ export const AppShell: React.FC<Props> = ({
               </div>
             </aside>
 
-            <main className="min-w-0 flex-1">{children}</main>
+            <main className="min-w-0 flex-1 w-full">{children}</main>
           </div>
 
           {/* Floating Bottom Quick-Dock strictly tailored to the Active Language! */}
-          <div className="fixed bottom-4 left-1/2 z-30 -translate-x-1/2">
-            <div className="flex items-center gap-1.5 rounded-full bg-[#111319]/95 px-2.5 py-2 shadow-dock backdrop-blur-md border border-white/10">
+          <div className="fixed bottom-3 sm:bottom-4 left-1/2 z-30 -translate-x-1/2 max-w-[calc(100vw-20px)]">
+            <div className="flex items-center gap-1.5 rounded-full bg-[#111319]/95 px-2 sm:px-2.5 py-1.5 sm:py-2 shadow-dock backdrop-blur-md border border-white/10 overflow-x-auto">
               <HoverTooltip
                 label={isEn ? 'Tìm nhanh Tiếng Anh (⌘K)' : 'Tìm nhanh Tiếng Nhật (⌘K)'}
                 description="Tra bài học, từ vựng & bài đọc ngay"

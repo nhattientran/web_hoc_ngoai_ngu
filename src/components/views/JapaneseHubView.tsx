@@ -168,15 +168,15 @@ export const JapaneseHubView: React.FC<Props> = ({ initialSubTab, onStartLesson 
       </div>
 
       {/* Main White Container like Screenshot 2 */}
-      <div className="rounded-[26px] border border-black/10 bg-white p-5 sm:p-7 shadow-soft space-y-6">
+      <div className="rounded-[24px] sm:rounded-[26px] border border-black/10 bg-white p-4 sm:p-7 shadow-soft space-y-5 sm:space-y-6 min-w-0">
         {/* Top segmented tabs */}
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex flex-wrap gap-1.5 rounded-full bg-[#F6F6F4] p-1.5 border border-black/5">
+          <div className="grid grid-cols-2 sm:inline-flex sm:flex-wrap gap-1.5 rounded-[20px] sm:rounded-full bg-[#F6F6F4] p-1.5 border border-black/5 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setSubTab('kana')}
-              className={`rounded-full px-4 py-2 text-xs sm:text-sm font-bold transition ${
-                subTab === 'kana' ? 'bg-[#08090D] text-white' : 'text-black/65 hover:text-[#08090D]'
+              className={`rounded-xl sm:rounded-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-bold transition text-center truncate ${
+                subTab === 'kana' ? 'bg-[#08090D] text-white shadow-sm' : 'text-black/65 hover:text-[#08090D]'
               }`}
             >
               かな Kana ({state.masteredKana.length}/92)
@@ -184,26 +184,26 @@ export const JapaneseHubView: React.FC<Props> = ({ initialSubTab, onStartLesson 
             <button
               type="button"
               onClick={() => setSubTab('kanji')}
-              className={`rounded-full px-4 py-2 text-xs sm:text-sm font-bold transition ${
-                subTab === 'kanji' ? 'bg-[#08090D] text-white' : 'text-black/65 hover:text-[#08090D]'
+              className={`rounded-xl sm:rounded-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-bold transition text-center truncate ${
+                subTab === 'kanji' ? 'bg-[#08090D] text-white shadow-sm' : 'text-black/65 hover:text-[#08090D]'
               }`}
             >
-              漢字 Kanji N5 ({state.masteredKanji.length}/{KANJI_N5_ITEMS.length})
+              漢字 Kanji ({state.masteredKanji.length}/{KANJI_N5_ITEMS.length})
             </button>
             <button
               type="button"
               onClick={() => setSubTab('pronunciation')}
-              className={`rounded-full px-4 py-2 text-xs sm:text-sm font-bold transition ${
-                subTab === 'pronunciation' ? 'bg-[#08090D] text-white' : 'text-black/65 hover:text-[#08090D]'
+              className={`rounded-xl sm:rounded-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-bold transition text-center truncate ${
+                subTab === 'pronunciation' ? 'bg-[#08090D] text-white shadow-sm' : 'text-black/65 hover:text-[#08090D]'
               }`}
             >
-              Phát âm & Nhịp phách
+              Phát âm & Nhịp
             </button>
             <button
               type="button"
               onClick={() => setSubTab('reading')}
-              className={`rounded-full px-4 py-2 text-xs sm:text-sm font-bold transition ${
-                subTab === 'reading' ? 'bg-[#08090D] text-white' : 'text-black/65 hover:text-[#08090D]'
+              className={`rounded-xl sm:rounded-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-bold transition text-center truncate ${
+                subTab === 'reading' ? 'bg-[#08090D] text-white shadow-sm' : 'text-black/65 hover:text-[#08090D]'
               }`}
             >
               Đọc hiểu dài N5
@@ -211,17 +211,17 @@ export const JapaneseHubView: React.FC<Props> = ({ initialSubTab, onStartLesson 
             <button
               type="button"
               onClick={() => setSubTab('grammar')}
-              className={`rounded-full px-4 py-2 text-xs sm:text-sm font-bold transition ${
-                subTab === 'grammar' ? 'bg-[#08090D] text-white' : 'text-black/65 hover:text-[#08090D]'
+              className={`rounded-xl sm:rounded-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-bold transition text-center truncate ${
+                subTab === 'grammar' ? 'bg-[#08090D] text-white shadow-sm' : 'text-black/65 hover:text-[#08090D]'
               }`}
             >
-              Ngữ pháp & Bài học N5
+              Ngữ pháp & Bài học
             </button>
             <button
               type="button"
               onClick={() => setSubTab('assessment')}
-              className={`rounded-full px-4 py-2 text-xs sm:text-sm font-bold transition ${
-                subTab === 'assessment' ? 'bg-[#08090D] text-white' : 'text-black/65 hover:text-[#08090D]'
+              className={`rounded-xl sm:rounded-full px-3 sm:px-4 py-2 text-xs sm:text-sm font-bold transition text-center truncate ${
+                subTab === 'assessment' ? 'bg-[#08090D] text-white shadow-sm' : 'text-black/65 hover:text-[#08090D]'
               }`}
             >
               Đánh giá JLPT N5
@@ -619,9 +619,9 @@ export const JapaneseHubView: React.FC<Props> = ({ initialSubTab, onStartLesson 
                 return (
                   <div
                     key={mod.id}
-                    className={`rounded-[22px] border p-5 space-y-3 ${style.bg} ${style.border}`}
+                    className={`min-w-0 rounded-[22px] border p-4 sm:p-5 space-y-3 ${style.bg} ${style.border}`}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-2">
                       <span className={`rounded-full px-3 py-0.5 text-xs font-extrabold ${style.pill}`}>
                         {mod.cefrOrJlpt}
                       </span>
@@ -629,7 +629,7 @@ export const JapaneseHubView: React.FC<Props> = ({ initialSubTab, onStartLesson 
                     </div>
                     <h3 className="text-base font-extrabold text-[#08090D]">{mod.title}</h3>
                     <p className="text-xs text-black/70 leading-relaxed">{mod.objectiveVi}</p>
-                    <div className="space-y-2 pt-1">
+                    <div className="space-y-2 pt-1 min-w-0">
                       {modLessons.map((les) => {
                         const status = getLessonStatus(les);
                         return (
@@ -638,13 +638,13 @@ export const JapaneseHubView: React.FC<Props> = ({ initialSubTab, onStartLesson 
                             type="button"
                             disabled={status === 'locked'}
                             onClick={() => onStartLesson(les)}
-                            className={`flex w-full items-center justify-between rounded-2xl bg-white/85 px-3.5 py-2.5 text-left text-xs font-bold transition ${
+                            className={`flex w-full min-w-0 items-center justify-between gap-2 rounded-2xl bg-white/85 px-3.5 py-2.5 text-left text-xs font-bold transition ${
                               status === 'locked'
                                 ? 'opacity-60 cursor-not-allowed'
                                 : 'hover:bg-white shadow-sm'
                             }`}
                           >
-                            <span className="font-jp truncate pr-2">{les.title}</span>
+                            <span className="font-jp min-w-0 flex-1 truncate pr-2">{les.title}</span>
                             <span className="shrink-0 inline-flex items-center gap-1 text-[11px]">
                               {status === 'completed' ? (
                                 <span className="text-[#1B5C32]">✓ Xong</span>

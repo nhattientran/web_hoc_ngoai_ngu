@@ -304,7 +304,7 @@ export const EnglishIpaView: React.FC = () => {
                     key={item.id}
                     type="button"
                     onClick={() => handleSelectSound(item)}
-                    className={`relative rounded-2xl border p-3 text-left transition ${
+                    className={`relative min-w-0 rounded-2xl border p-3 text-left transition ${
                       isActive
                         ? 'border-[#08090D] bg-[#08090D] text-white shadow-card scale-[1.01]'
                         : colors.tileBg

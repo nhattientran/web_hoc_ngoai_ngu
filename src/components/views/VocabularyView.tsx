@@ -503,22 +503,22 @@ export const VocabularyView: React.FC<Props> = ({ activeLanguage }) => {
         {/* Search, Filter, Sort, Group & Add Controls */}
         <div className="space-y-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2 flex-1">
-              <div className="flex items-center gap-2 rounded-full border border-black/10 bg-[#F6F6F4] px-4 py-2 min-w-[200px] flex-1 max-w-xs">
-                <Search className="h-4 w-4 text-black/45" />
+            <div className="flex flex-wrap items-center gap-2 flex-1 min-w-0">
+              <div className="flex h-9 w-full sm:w-auto sm:min-w-[210px] sm:flex-1 sm:max-w-xs items-center gap-2 rounded-full border border-black/12 bg-[#F6F6F4] px-3.5 focus-within:border-[#08090D] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#08090D]/10 transition">
+                <Search className="h-4 w-4 text-black/45 shrink-0" />
                 <input
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Tìm từ, nghĩa, phiên âm..."
-                  className="w-full bg-transparent text-xs sm:text-sm outline-none"
+                  className="w-full min-w-0 bg-transparent text-xs sm:text-sm font-medium text-[#08090D] outline-none placeholder:text-black/45"
                 />
               </div>
 
               <select
                 value={topicFilter}
                 onChange={(e) => setTopicFilter(e.target.value)}
-                className="rounded-full border border-black/10 bg-white px-3.5 py-2 text-xs font-bold"
+                className="h-9 max-w-full rounded-full border border-black/12 bg-white pl-3.5 text-xs font-bold text-[#08090D] transition hover:border-black/25 focus:border-[#08090D] focus:ring-2 focus:ring-[#08090D]/10"
               >
                 <option value="all">Mọi chủ đề</option>
                 {topics.map((t) => (
@@ -531,7 +531,7 @@ export const VocabularyView: React.FC<Props> = ({ activeLanguage }) => {
               <select
                 value={stateFilter}
                 onChange={(e) => setStateFilter(e.target.value as any)}
-                className="rounded-full border border-black/10 bg-white px-3.5 py-2 text-xs font-bold"
+                className="h-9 max-w-full rounded-full border border-black/12 bg-white pl-3.5 text-xs font-bold text-[#08090D] transition hover:border-black/25 focus:border-[#08090D] focus:ring-2 focus:ring-[#08090D]/10"
               >
                 <option value="all">Mọi trạng thái</option>
                 <option value="new">Từ mới</option>
@@ -544,7 +544,7 @@ export const VocabularyView: React.FC<Props> = ({ activeLanguage }) => {
               <select
                 value={listFilter}
                 onChange={(e) => setListFilter(e.target.value)}
-                className="rounded-full border border-black/10 bg-white px-3.5 py-2 text-xs font-bold"
+                className="h-9 max-w-full rounded-full border border-black/12 bg-white pl-3.5 text-xs font-bold text-[#08090D] transition hover:border-black/25 focus:border-[#08090D] focus:ring-2 focus:ring-[#08090D]/10"
               >
                 <option value="all">Tất cả bộ từ</option>
                 {visibleLists.map((l) => (
@@ -594,13 +594,13 @@ export const VocabularyView: React.FC<Props> = ({ activeLanguage }) => {
               ))}
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-1.5 rounded-full border border-black/10 bg-white px-3 py-1">
-                <ArrowUpDown className="h-3.5 w-3.5 text-black/55" />
+            <div className="flex flex-wrap items-center gap-2 max-w-full">
+              <div className="inline-flex h-8 max-w-full items-center gap-1.5 rounded-full border border-black/12 bg-white pl-3 pr-0.5 focus-within:border-[#08090D] focus-within:ring-2 focus-within:ring-[#08090D]/10 transition">
+                <ArrowUpDown className="h-3.5 w-3.5 text-black/55 shrink-0" />
                 <select
                   value={sortMode}
                   onChange={(e) => setSortMode(e.target.value as SortMode)}
-                  className="bg-transparent text-xs font-bold outline-none"
+                  className="min-w-0 max-w-full bg-transparent py-1 text-xs font-bold text-[#08090D] outline-none truncate"
                 >
                   <option value="topic_pos">Sắp xếp: Chủ đề + Từ loại (N→V→Adj)</option>
                   <option value="due_first">Sắp xếp: Đến hạn ôn SRS trước</option>

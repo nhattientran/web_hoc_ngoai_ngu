@@ -82,7 +82,7 @@ export const PracticeHubView: React.FC<Props> = ({ activeLanguage }) => {
                 setResults({});
                 setSessionSaved(false);
               }}
-              className="rounded-full border border-black/10 bg-[#F6F6F4] px-4 py-2 text-xs font-bold"
+              className="h-9 rounded-full border border-black/12 bg-[#F6F6F4] pl-3.5 text-xs font-bold text-[#08090D] transition hover:border-black/25 focus:border-[#08090D] focus:bg-white focus:ring-2 focus:ring-[#08090D]/10"
             >
               <option value="all">Mọi kỹ năng</option>
               <option value="grammar">Ngữ pháp</option>

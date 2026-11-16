@@ -273,14 +273,14 @@ export const JapaneseReadingView: React.FC = () => {
               ))}
             </div>
 
-            <div className="flex items-center gap-2 rounded-full border border-black/10 bg-[#F6F6F4] px-3.5 py-1.5">
-              <Search className="h-3.5 w-3.5 text-black/45" />
+            <div className="flex w-full sm:w-auto items-center gap-2 rounded-full border border-black/12 bg-[#F6F6F4] px-3.5 py-1.5 focus-within:border-[#08090D] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#08090D]/10 transition">
+              <Search className="h-3.5 w-3.5 text-black/45 shrink-0" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Tìm bài đọc, từ mới..."
-                className="w-40 bg-transparent text-xs font-medium text-[#08090D] outline-none"
+                className="w-full sm:w-40 bg-transparent text-xs font-medium text-[#08090D] outline-none"
               />
             </div>
           </div>
